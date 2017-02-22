@@ -13,9 +13,10 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements Runnable {
     Ball ball;
+    Block[] blocks;
     Handler handler;
     int width, height;
-    int dx = 10, dy = 10, time = 16;
+    int dx = 10, dy = 15, time = 16;
 
     RelativeLayout relativeLayout;
 
@@ -37,29 +38,37 @@ public class MainActivity extends Activity implements Runnable {
         display.getSize(point);
         width = point.x;
         height = point.y;
-        ball = new Ball(this);
+        ball = new Ball(this, 10, 10);
         ball.x = width / 2;
         ball.y = height / 2;
         relativeLayout.addView(ball);
+
+        blocks = new Block[10];
+        for(int i=0; i<10; i++){
+            Block block = new Block(this, i * 100, 0);
+            blocks[i] = block;
+            relativeLayout.addView(blocks[i]);
+        }
     }
     public void run() {
-        ball.x += dx;
-        ball.y += dy;
-
-        if (ball.x <= ball.radius) {
-            ball.x = ball.radius;
-            dx = -dx;
-        } else if (ball.x >= width - ball.radius) {
-            ball.x = width - ball.radius;
-            dx = -dx;
-        }
-        if (ball.y <= ball.radius) {
-            ball.y = ball.radius;
-            dy = -dy;
-        } else if (ball.y >= height - ball.radius) {
-            ball.y = height - ball.radius;
-            dy = -dy;
-            relativeLayout.removeView(ball);
+        ball.update(0, 0, width, height);
+        for(int i=0; i<10; i++){
+            if(!blocks[i].isValid){
+                continue;
+            }
+            if(blocks[i].isCollisionSphere(ball.x, ball.y, ball.radius)){
+                relativeLayout.removeView(blocks[i]);
+                switch(blocks[i].collisionSphereDirection(ball.x, ball.y, ball.prevX, ball.prevY, ball.radius)){
+                    case TOP:
+                    case DOWN:
+                        ball.vy = -ball.vy;
+                        break;
+                    case LEFT:
+                    case RIGHT:
+                        ball.vx = -ball.vx;
+                        break;
+                }
+            }
         }
 
         ball.invalidate();

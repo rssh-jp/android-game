@@ -38,14 +38,14 @@ public class MainActivity extends Activity implements Runnable {
         display.getSize(point);
         width = point.x;
         height = point.y;
-        ball = new Ball(this, 10, 10);
+        ball = new Ball(this, 30, 30);
         ball.x = width / 2;
         ball.y = height / 2;
         relativeLayout.addView(ball);
 
         blocks = new Block[10];
         for(int i=0; i<10; i++){
-            Block block = new Block(this, i * 100, 0);
+            Block block = new Block(this, i * 100, 500);
             blocks[i] = block;
             relativeLayout.addView(blocks[i]);
         }
@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements Runnable {
             }
             if(blocks[i].isCollisionSphere(ball.x, ball.y, ball.radius)){
                 relativeLayout.removeView(blocks[i]);
+                blocks[i].isValid = false;
                 switch(blocks[i].collisionSphereDirection(ball.x, ball.y, ball.prevX, ball.prevY, ball.radius)){
                     case TOP:
                     case DOWN:

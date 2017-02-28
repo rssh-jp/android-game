@@ -38,13 +38,10 @@ public class Button extends View{
         if(this.aIsPress){
             return false;
         }
-        this.aIsPress = true;
-        float x = e.getX();
-        float y = e.getY();
-        if(
-                (this.aX <= x && this.aX + this.aRadius > x)
-            && (this.aY <= y && this.aY + this.aRadius > y)
-        ){
+        Vector3 vTouch = new Vector3(e.getX(), e.getY(), 0);
+        Vector3 vOwn = new Vector3(this.aX, this.aY, 0);
+        if(vOwn.sub(vTouch).length() <= this.aRadius){
+            this.aIsPress = true;
             aPaint.setColor(Color.RED);
             this.invalidate();
             Log.d("touch","button");
@@ -57,20 +54,11 @@ public class Button extends View{
         if(!this.aIsPress){
             return false;
         }
+        aPaint.setColor(Color.BLUE);
+        this.invalidate();
+        Log.d("touch","button");
         this.aIsPress = false;
-        float x = e.getX();
-        float y = e.getY();
-        if(
-                (this.aX <= x && this.aX + this.aRadius > x)
-                        && (this.aY <= y && this.aY + this.aRadius > y)
-                ){
-            aPaint.setColor(Color.BLUE);
-            this.invalidate();
-            Log.d("touch","button");
-            return true;
-        }
-
-        return false;
+        return true;
     }
     public boolean onTouchEvent(MotionEvent e){
         switch(e.getAction()){

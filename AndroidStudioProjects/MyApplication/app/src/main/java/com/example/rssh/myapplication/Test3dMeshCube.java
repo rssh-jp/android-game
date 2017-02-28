@@ -42,9 +42,9 @@ public class Test3dMeshCube {
         -0.5f, -0.5f, -0.5f,
         0.5f, -0.5f, -0.5f
     };
-    ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
-    vbb.order(ByteOrder.LITTLE_ENDIAN);
-    mVertexBuffer = vbb.asFloatBuffer();
-    mVertexBuffer.put(vertices);
-    mVertexBuffer.position(0);
+//    ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
+//    vbb.order(ByteOrder.LITTLE_ENDIAN);
+//    mVertexBuffer = vbb.asFloatBuffer();
+//    mVertexBuffer.put(vertices);
+//    mVertexBuffer.position(0);
 }

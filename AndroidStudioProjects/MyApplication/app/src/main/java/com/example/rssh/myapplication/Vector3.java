@@ -8,12 +8,23 @@ package com.example.rssh.myapplication;
 public class Vector3 {
     public double aX, aY, aZ;
     public Vector3(double x, double y, double z){
+        this.set(x, y, z);
+    }
+    public void set(double x, double y, double z){
         aX = x;
         aY = y;
         aZ = z;
     }
     public Vector3 clone(){
         return new Vector3(this.aX, this.aY, this.aZ);
+    }
+    public double[] toArray(){
+        double d[] = {this.aX, this.aY, this.aZ};
+        return d;
+    }
+    public double[] toArrayInverse(){
+        double d[] = {-this.aX, -this.aY, -this.aZ};
+        return d;
     }
     public Vector3 add(Vector3 v){
         return new Vector3(this.aX + v.aX, this.aY + v.aY, this.aZ + v.aZ);

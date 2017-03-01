@@ -24,6 +24,8 @@ public class MainActivity extends Activity implements Runnable {
 
     RelativeLayout relativeLayout;
 
+    Test3dView glView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,9 @@ public class MainActivity extends Activity implements Runnable {
 
         aButton = new Button(this, 200, 1300, 100);
         relativeLayout.addView(aButton);
+
+        glView = new Test3dView(this);
+        setContentView(glView);
     }
     public void run() {
         ball.update(0, 0, width, height);

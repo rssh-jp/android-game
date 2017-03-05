@@ -20,15 +20,15 @@ public class Test3dMeshCube {
                 -0.5f, 0.5f, 0.5f,
                 0.5f, 0.5f, 0.5f,
                 // 後
-                -0.5f, -0.5f, -0.5f,
                 0.5f, -0.5f, -0.5f,
-                -0.5f, 0.5f, -0.5f,
-                0.5f, 0.5f, -0.5f,
-                // 左
-                -0.5f, -0.5f, 0.5f,
                 -0.5f, -0.5f, -0.5f,
-                -0.5f, 0.5f, 0.5f,
+                0.5f, 0.5f, -0.5f,
                 -0.5f, 0.5f, -0.5f,
+                // 左
+                -0.5f, -0.5f, -0.5f,
+                -0.5f, -0.5f, 0.5f,
+                -0.5f, 0.5f, -0.5f,
+                -0.5f, 0.5f, 0.5f,
                 // 右
                 0.5f, -0.5f, 0.5f,
                 0.5f, -0.5f, -0.5f,
@@ -40,10 +40,10 @@ public class Test3dMeshCube {
                 -0.5f, 0.5f, -0.5f,
                 0.5f, 0.5f, -0.5f,
                 // 底
-                -0.5f, -0.5f, 0.5f,
                 0.5f, -0.5f, 0.5f,
+                -0.5f, -0.5f, 0.5f,
+                0.5f, -0.5f, -0.5f,
                 -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f
         };
         ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
         vbb.order(ByteOrder.LITTLE_ENDIAN);
@@ -59,18 +59,18 @@ public class Test3dMeshCube {
         gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
 
         gl.glNormal3f(0, 0, -1.0f);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 4, 4);
 
         gl.glNormal3f(-1.0f, 0, 0);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 8, 4);
 
         gl.glNormal3f(1.0f, 0, 0);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 12, 4);
 
         gl.glNormal3f(0, 1.0f, 0);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 16, 4);
 
         gl.glNormal3f(0, -1.0f, 0);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 20, 4);
     }
 }

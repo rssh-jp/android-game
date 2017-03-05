@@ -13,6 +13,12 @@ import javax.microedition.khronos.opengles.GL10;
 public class Test3dRenderer implements Renderer{
     float aAngle = 0;
     Test3dMeshCube cube = new Test3dMeshCube();
+    public void onSurfaceCreated(GL10 gl, EGLConfig config){
+        gl.glEnable(GL10.GL_DEPTH_TEST);
+        gl.glDepthFunc(GL10.GL_LEQUAL);
+        gl.glEnable(GL10.GL_LIGHTING);
+        gl.glEnable(GL10.GL_LIGHT0);
+    }
     public void onDrawFrame(GL10 gl){
         aAngle += 1;
         if(aAngle >= 360){
@@ -28,7 +34,7 @@ public class Test3dRenderer implements Renderer{
 
         gl.glTranslatef(0, 0, -5f);
         gl.glRotatef(aAngle, 0, 1, 0);
-        gl.glRotatef(10f, 1, 0, 0);
+        gl.glRotatef(30f, 1, 0, 0);
 
 
         cube.draw(gl);
@@ -38,13 +44,6 @@ public class Test3dRenderer implements Renderer{
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
 
-//        gl.glTranslatef(0, 0, -3f);
-//        gl.glRotatef(30f, 0, 1, 0);
-
         GLU.gluPerspective(gl, 45f, (float)width / height, 1f, 50f);
-    }
-    public void onSurfaceCreated(GL10 gl, EGLConfig config){
-        gl.glEnable(GL10.GL_DEPTH_TEST);
-        gl.glDepthFunc(GL10.GL_LEQUAL);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.rssh.myapplication;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +18,7 @@ public class Ball extends View {
     int prevX, prevY;
     Paint paint;
     int vx, vy;
+    Bitmap aBitmap;
 
     public Ball(Context context, int _vx, int _vy) {
         super(context);
@@ -26,10 +29,13 @@ public class Ball extends View {
         paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
+        aBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image1);
+//        aBitmap = aBitmap.createScaledBitmap(aBitmap, w, h, true);
     }
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        canvas.drawCircle(x, y, radius, paint);
+//        canvas.drawCircle(x, y, radius, paint);
+        canvas.drawBitmap(aBitmap, 0, 0, paint);
     }
     public void update(int _x, int _y, int _w, int _h){
         prevX = x;

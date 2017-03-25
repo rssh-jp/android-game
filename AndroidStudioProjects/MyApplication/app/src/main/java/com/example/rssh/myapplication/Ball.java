@@ -25,15 +25,13 @@ public class Ball extends View {
     int aPixels[];
     int aWidth, aHeight;
 
-    public Ball(Context context, int _vx, int _vy, int w, int h) {
+    public Ball(Context context, int angle, double speed, int w, int h) {
         super(context);
         aWidth = w;
         aHeight = h;
         radius = 30;
-        aPos = new Vector3(200, 600, 0);
+        aPos = new Vector3(200, 800, 0);
         aPrevPos = new Vector3(0, 0, 0);
-        int angle = 100;
-        double speed = 10;
         aSpeed = speed;
         double rad = Common.angle2Radian(angle);
         aDir = new Vector3(Math.cos(rad), Math.sin(rad), 0);
@@ -78,6 +76,7 @@ public class Ball extends View {
 //        canvas.drawCircle(x, y, radius, paint);
     }
     public void update(int _x, int _y, int _w, int _h){
+        this.deceleration();
         aPrevPos = aPos.clone();
         aPos = aPos.add(aDir.mul(aSpeed));
 
@@ -115,5 +114,11 @@ public class Ball extends View {
     }
     public void reverseY(){
         aDir.aY *= -1;
+    }
+    public void deceleration(){
+        aSpeed -= 0.1;
+        if(aSpeed < 0){
+            aSpeed = 0;
+        }
     }
 }

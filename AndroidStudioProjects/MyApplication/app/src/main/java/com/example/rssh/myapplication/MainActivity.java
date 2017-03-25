@@ -54,7 +54,7 @@ public class MainActivity extends Activity implements Runnable {
         aBG = new BackGround(this, width, height);
         relativeLayout.addView(aBG);
 
-        ball = new Ball(this, 10, 10, width, height);
+        ball = new Ball(this, 30, 15.5, width, height);
         relativeLayout.addView(ball);
 
         blocks = new Block[blockNum];
@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements Runnable {
         aButton = new Button(this, 200, 1300, 100);
         relativeLayout.addView(aButton);
 
-        glView = new Test3dView(this);
+//        glView = new Test3dView(this);
 //        setContentView(glView);
 
     }

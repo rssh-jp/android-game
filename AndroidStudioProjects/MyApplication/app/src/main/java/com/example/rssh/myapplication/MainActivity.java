@@ -1,6 +1,8 @@
 package com.example.rssh.myapplication;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Handler;
@@ -13,10 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import java.io.File;
+
 public class MainActivity extends Activity implements Runnable {
     Ball ball;
     Block[] blocks;
     Button aButton;
+    BackGround aBG;
     Handler handler;
     int width, height;
     int dx = 10, dy = 15, time = 16;
@@ -45,15 +50,17 @@ public class MainActivity extends Activity implements Runnable {
         display.getSize(point);
         width = point.x;
         height = point.y;
-        ball = new Ball(this, 10, 10);
-        ball.x = width / 2;
-        ball.y = height - 100;
+
+        aBG = new BackGround(this, width, height);
+        relativeLayout.addView(aBG);
+
+        ball = new Ball(this, 30, 15.5, width, height);
         relativeLayout.addView(ball);
 
         blocks = new Block[blockNum];
         for(int i=0; i<blockNum; i++){
-            int x = 40 + (100 * (i % 10));
-            int y = 300 + (60 * (i / 10));
+            int x =  40 + (100 * (i % 10));
+            int y = 300 + ( 60 * (i / 10));
             Block block = new Block(this, x, y);
             blocks[i] = block;
             relativeLayout.addView(blocks[i]);
@@ -62,8 +69,9 @@ public class MainActivity extends Activity implements Runnable {
         aButton = new Button(this, 200, 1300, 100);
         relativeLayout.addView(aButton);
 
-        glView = new Test3dView(this);
-        setContentView(glView);
+//        glView = new Test3dView(this);
+//        setContentView(glView);
+
     }
     public void run() {
         ball.update(0, 0, width, height);
@@ -71,17 +79,17 @@ public class MainActivity extends Activity implements Runnable {
             if(!blocks[i].isValid){
                 continue;
             }
-            if(blocks[i].isCollisionSphere(ball.x, ball.y, ball.radius)){
+            if(blocks[i].isCollisionSphere(ball.X(), ball.Y(), ball.radius)){
                 relativeLayout.removeView(blocks[i]);
                 blocks[i].isValid = false;
-                switch(blocks[i].collisionSphereDirection(ball.x, ball.y, ball.prevX, ball.prevY, ball.radius)){
+                switch(blocks[i].collisionSphereDirection(ball.X(), ball.Y(), ball.PrevX(), ball.PrevY(), ball.radius)){
                     case TOP:
                     case DOWN:
-                        ball.vy = -ball.vy;
+                        ball.reverseY();
                         break;
                     case LEFT:
                     case RIGHT:
-                        ball.vx = -ball.vx;
+                        ball.reverseX();
                         break;
                 }
             }
@@ -96,5 +104,6 @@ public class MainActivity extends Activity implements Runnable {
     }
     public boolean onTouchEvent(MotionEvent e){
         return false;
+
     }
 }

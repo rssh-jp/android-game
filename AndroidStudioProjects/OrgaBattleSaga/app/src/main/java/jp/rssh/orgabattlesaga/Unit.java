@@ -40,31 +40,32 @@ public class Unit extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.d("Unit", "onTouchEvent");
         switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.d("down", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
-                if(event.getX() > 50 || event.getX() < 0 || event.getY() > 50 || event.getY() < 0){
-                    break;
-                }
-                Log.d("down", "success");
-                aIsTouched = true;
+        case MotionEvent.ACTION_DOWN:
+            Log.d("down", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
+            if(event.getX() > 50 || event.getX() < 0 || event.getY() > 50 || event.getY() < 0){
                 break;
-            case MotionEvent.ACTION_UP:
-                Log.d("up", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
-                if(event.getX() > 50 || event.getX() < 0 || event.getY() > 50 || event.getY() < 0){
-                    aIsTouched = false;
-                    break;
-                }
-                if(!aIsTouched){
-                    break;
-                }
-                Log.d("up", "success");
+            }
+            Log.d("down", "success");
+            aIsTouched = true;
+            return true;
+        case MotionEvent.ACTION_UP:
+            Log.d("up", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
+            if(event.getX() > 50 || event.getX() < 0 || event.getY() > 50 || event.getY() < 0){
                 aIsTouched = false;
-                aIsSelected = true;
-
                 break;
+            }
+            if(!aIsTouched){
+                break;
+            }
+            Log.d("up", "success");
+            aIsTouched = false;
+            aIsSelected = true;
+            this.invalidate();
+
+            return true;
         }
-        return false;
-        //return super.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 }

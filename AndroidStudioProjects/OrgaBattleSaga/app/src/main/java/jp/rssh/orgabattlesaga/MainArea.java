@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
@@ -55,10 +57,45 @@ public class MainArea extends RelativeLayout {
     public void update(){
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        aUnit.onTouchEvent(event);
+        Log.d("MainArea", "onTouchEvent");
+//        switch(event.getAction()){
+//        case MotionEvent.ACTION_DOWN:
+//            aIsTouched = true;
+//            aTouchPoint.set(event.getX(), event.getY());
+//            return true;
+//        case MotionEvent.ACTION_UP:
+//            aIsTouched = false;
+//            return true;
+//        case MotionEvent.ACTION_MOVE:
+//            if(!aIsTouched){
+//                break;
+//            }
+//            Vector2D current = new Vector2D(event.getX(), event.getY());
+//            current = current.sub(aTouchPoint);
+//            float newX = this.getX() + (float)current.aX;
+//            float newY = this.getY() + (float)current.aY;
+//
+//            Global g = Global.getInstance();
+//            int w = g.getDisplayWidth();
+//            int h = g.getDisplayHeight();
+//            newX = newX > 0 ? 0 : newX;
+//            newY = newY > 0 ? 0 : newY;
+//            newX = newX < -(this.getAreaWidth() - w) ? -(this.getAreaWidth() - w) : newX;
+//            newY = newY < -(this.getAreaHeight() - h) ? -(this.getAreaHeight() - h) : newY;
+//            this.setTranslationX(newX);
+//            this.setTranslationY(newY);
+//
+//            Log.d("screen", String.valueOf(w) + ":" + String.valueOf(h));
+//            Log.d("point", String.valueOf(newX) + ":" + String.valueOf(newY));
+//
+//            aTouchPoint.set(event.getX(), event.getY());
+//
+//            return true;
+//        case MotionEvent.ACTION_CANCEL:
+//            break;
+//        }
         return super.onTouchEvent(event);
     }
 }

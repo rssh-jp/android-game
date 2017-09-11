@@ -58,7 +58,6 @@ public class MainArea extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        aUnit.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 }

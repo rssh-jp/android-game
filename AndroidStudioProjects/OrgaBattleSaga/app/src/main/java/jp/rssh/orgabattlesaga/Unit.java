@@ -61,10 +61,8 @@ public class Unit extends View {
                 Log.d("up", "success");
                 aIsTouched = false;
                 aIsSelected = true;
-
-                break;
+                return true;
         }
-        return false;
-        //return super.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 }

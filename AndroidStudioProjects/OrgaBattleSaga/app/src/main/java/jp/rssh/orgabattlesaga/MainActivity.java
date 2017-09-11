@@ -59,6 +59,7 @@ public class MainActivity extends Activity implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.d("point", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
         switch(event.getAction()){
         case MotionEvent.ACTION_DOWN:
             aIsTouched = true;
@@ -76,10 +77,21 @@ public class MainActivity extends Activity implements Runnable {
             float newX = aMainArea.getX() + (float)current.aX;
             float newY = aMainArea.getY() + (float)current.aY;
 
-            newX = newX > 0 ? 0 : newX;
-            newY = newY > 0 ? 0 : newY;
-            newX = newX < -(aMainArea.getAreaWidth() - aWidth) ? -(aMainArea.getAreaWidth() - aWidth) : newX;
-            newY = newY < -(aMainArea.getAreaHeight() - aHeight) ? -(aMainArea.getAreaHeight() - aHeight) : newY;
+            if(aWidth < aMainArea.getAreaWidth()){
+                newX = newX > 0 ? 0 : newX;
+                newX = newX < -(aMainArea.getAreaWidth() - aWidth) ? -(aMainArea.getAreaWidth() - aWidth) : newX;
+            }
+            else{
+                newX = 0;
+            }
+            if(aHeight < aMainArea.getAreaHeight()){
+                newY = newY > 0 ? 0 : newY;
+                newY = newY < -(aMainArea.getAreaHeight() - aHeight) ? -(aMainArea.getAreaHeight() - aHeight) : newY;
+            }
+            else {
+                newY = 0;
+            }
+
             aMainArea.setTranslationX(newX);
             aMainArea.setTranslationY(newY);
 
@@ -91,7 +103,7 @@ public class MainActivity extends Activity implements Runnable {
             break;
         }
 
-        aMainArea.onTouchEvent(event);
+//        aMainArea.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 }

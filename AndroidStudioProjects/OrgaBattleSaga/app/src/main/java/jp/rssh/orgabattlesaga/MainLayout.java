@@ -24,7 +24,7 @@ public class MainLayout extends RelativeLayout {
         super(context);
 
         aWidth = width;
-        aHeight = height;
+        aHeight = height * 2 / 3;
 
         aIsTouched = false;
         aTouchPoint = new Vector2D(0, 0);
@@ -37,7 +37,7 @@ public class MainLayout extends RelativeLayout {
 
         aCockpit = new Cockpit(context);
         this.addView(aCockpit);
-        aCockpit.setTranslationY(aHeight / 2);
+        aCockpit.setTranslationY(aHeight);
         aCockpit.requestLayout();
     }
 

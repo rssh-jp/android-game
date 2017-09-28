@@ -65,6 +65,8 @@ public class MainLayout extends RelativeLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         trace("touch");
+        aCockpit.preTouchEvent(event);
+        aMainArea.preTouchEvent(event, 0, 0);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 aIsTouched = true;

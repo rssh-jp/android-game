@@ -3,6 +3,7 @@ package jp.rssh.orgabattlesaga;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
@@ -54,6 +55,19 @@ public class MainArea extends RelativeLayout {
         }
     }
 
+    private String getClassName(){
+        return new Object(){}.getClass().getEnclosingClass().getName();
+    }
+    private void trace(double x, double y){
+        Log.d(getClassName(), String.valueOf(x) + ":" + String.valueOf(y));
+    }
+    private void trace(){
+        Log.d(getClassName(), "");
+    }
+    private void trace(String str){
+        Log.d(getClassName(), str);
+    }
+
     public void checkUnit(int number){
         for(int i=0; i<2; i++){
             if(number == i){
@@ -85,9 +99,22 @@ public class MainArea extends RelativeLayout {
     public void update(){
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }
+
+    public boolean preTouchEvent(MotionEvent event, float x, float y){
+/*
+        for(int i=0; i<aRect.length; i++){
+            aRect[i].preTouchEvent(event);
+        }
+*/
+        for(int i=0; i<aUnit.length; i++){
+            aUnit[i].preTouchEvent(event, x + getX(), y + getY());
+        }
+
+        return false;
+    }
+
 }

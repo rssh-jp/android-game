@@ -23,6 +23,17 @@ public class Cockpit extends ViewGroup {
         aPaint.setStyle(Paint.Style.FILL);
     }
 
+    private final String CLASSNAME = "Cockpit";
+    private void trace(double x, double y){
+        Log.d(CLASSNAME, String.valueOf(x) + ":" + String.valueOf(y));
+    }
+    private void trace(){
+        Log.d(CLASSNAME, "");
+    }
+    private void trace(String str){
+        Log.d(CLASSNAME, str);
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
@@ -34,8 +45,10 @@ public class Cockpit extends ViewGroup {
         canvas.drawRect(0, 0, 100, 100, aPaint);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return true;
+    public boolean preTouchEvent(MotionEvent event){
+        trace(event.getX(), event.getY());
+        trace(this.getX(), this.getY());
+        return false;
     }
+
 }

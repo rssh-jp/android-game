@@ -44,6 +44,7 @@ public class Unit extends View {
         canvas.drawRect(0, 0, 50, 50, aSelectPaint);
     }
 
+/*
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.d("Unit", "onTouchEvent");
@@ -74,5 +75,31 @@ public class Unit extends View {
             return true;
         }
         return super.onTouchEvent(event);
+    }
+*/
+
+    private String getClassName(){
+        return new Object(){}.getClass().getEnclosingClass().getName();
+    }
+    private void trace(double x, double y){
+        Log.d(getClassName(), String.valueOf(x) + ":" + String.valueOf(y));
+    }
+    private void trace(){
+        Log.d(getClassName(), "");
+    }
+    private void trace(String str){
+        Log.d(getClassName(), str);
+    }
+
+    public boolean preTouchEvent(MotionEvent event, float x, float y){
+        trace(event.getX(), event.getY());
+        trace(this.getX() + x, this.getY() + y);
+        return false;
+    }
+
+    public boolean postTouchEvent(MotionEvent event, float x, float y){
+        trace(event.getX(), event.getY());
+        trace(this.getX() + x, this.getY() + y);
+        return false;
     }
 }

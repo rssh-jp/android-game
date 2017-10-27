@@ -20,6 +20,8 @@ public class MainLayout extends RelativeLayout {
     boolean aIsTouched;
     Vector2D aTouchPoint;
 
+    int aEventId;
+
     public MainLayout(Context context, int width, int height) {
         super(context);
 
@@ -39,6 +41,8 @@ public class MainLayout extends RelativeLayout {
         this.addView(aCockpit);
         aCockpit.setTranslationY(aHeight);
         aCockpit.requestLayout();
+
+        aEventId = 0;
     }
 
     @Override
@@ -64,9 +68,37 @@ public class MainLayout extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // pretouchevent処理
+        ResTouchEvent res = aCockpit.preTouchEvent(event, 0, 0, aEventId);
+        if(res.aResult){
+            aEventId = res.aId;
+            return true;
+        }
+        res = aMainArea.preTouchEvent(event, 0, 0, aEventId);
+        if(res.aResult){
+            aEventId = res.aId;
+            return true;
+        }
+
+        if(aEventId != 0 && aEventId != this.getId()) {
+            // posttouchevent処理
+            res = aMainArea.postTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
+
+            res = aCockpit.postTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
+
+            return false;
+        }
+
+        // この画面の処理
         trace("touch");
-        aCockpit.preTouchEvent(event);
-        aMainArea.preTouchEvent(event, 0, 0);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 aIsTouched = true;
@@ -105,9 +137,23 @@ public class MainLayout extends RelativeLayout {
 
                 aTouchPoint.set(event.getX(), event.getY());
 
+                aEventId = this.getId();
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 break;
+        }
+
+        // posttouchevent処理
+        res = aMainArea.postTouchEvent(event, 0, 0, aEventId);
+        if(res.aResult){
+            aEventId = res.aId;
+            return true;
+        }
+
+        res = aCockpit.postTouchEvent(event, 0, 0, aEventId);
+        if(res.aResult){
+            aEventId = res.aId;
+            return true;
         }
 
         return super.onTouchEvent(event);

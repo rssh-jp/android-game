@@ -7,8 +7,8 @@ import android.graphics.Canvas;
  */
 
 public class ModeField extends DrawBase{
-    public ModeField(){
-        super();
+    public ModeField(String id){
+        super(id);
     }
     public void update(){
     }

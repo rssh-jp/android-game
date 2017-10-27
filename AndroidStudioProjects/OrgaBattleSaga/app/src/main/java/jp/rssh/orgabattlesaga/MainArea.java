@@ -104,17 +104,53 @@ public class MainArea extends RelativeLayout {
         return super.onTouchEvent(event);
     }
 
-    public boolean preTouchEvent(MotionEvent event, float x, float y){
+    public ResTouchEvent preTouchEvent(MotionEvent event, float x, float y, int id){
 /*
         for(int i=0; i<aRect.length; i++){
             aRect[i].preTouchEvent(event);
         }
 */
         for(int i=0; i<aUnit.length; i++){
-            aUnit[i].preTouchEvent(event, x + getX(), y + getY());
+            ResTouchEvent res = aUnit[i].preTouchEvent(event, x + getX(), y + getY(), id);
+            if(!res.aResult){
+                continue;
+            }
+
+            return res;
         }
 
-        return false;
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
+
+        // この画面の処理
+
+        return new ResTouchEvent();
+    }
+
+    public ResTouchEvent postTouchEvent(MotionEvent event, float x, float y, int id){
+/*
+        for(int i=0; i<aRect.length; i++){
+            aRect[i].preTouchEvent(event);
+        }
+*/
+        // pretouchevent処理
+        for(int i=0; i<aUnit.length; i++){
+            ResTouchEvent res = aUnit[i].preTouchEvent(event, x + getX(), y + getY(), id);
+            if(!res.aResult){
+                continue;
+            }
+
+            return res;
+        }
+
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
+
+        // この画面の処理
+
+        return new ResTouchEvent();
     }
 
 }

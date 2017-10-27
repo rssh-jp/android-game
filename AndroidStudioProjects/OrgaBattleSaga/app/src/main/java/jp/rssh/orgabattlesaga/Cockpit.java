@@ -45,10 +45,22 @@ public class Cockpit extends ViewGroup {
         canvas.drawRect(0, 0, 100, 100, aPaint);
     }
 
-    public boolean preTouchEvent(MotionEvent event){
+    public ResTouchEvent preTouchEvent(MotionEvent event, float x, float y, int id){
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
         trace(event.getX(), event.getY());
         trace(this.getX(), this.getY());
-        return false;
+        return new ResTouchEvent();
+    }
+
+    public ResTouchEvent postTouchEvent(MotionEvent event, float x, float y, int id){
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
+        trace(event.getX(), event.getY());
+        trace(this.getX(), this.getY());
+        return new ResTouchEvent();
     }
 
 }

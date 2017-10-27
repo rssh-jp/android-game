@@ -91,15 +91,54 @@ public class Unit extends View {
         Log.d(getClassName(), str);
     }
 
-    public boolean preTouchEvent(MotionEvent event, float x, float y){
+    public float getX(float x){return super.getX() + x;}
+    public float getY(float y){return super.getY() + y;}
+
+    private float eventGetX(MotionEvent event, float x){return event.getX() - (super.getX() + x);}
+    private float eventGetY(MotionEvent event, float y){return event.getY() - (super.getY() + y);}
+
+    public ResTouchEvent preTouchEvent(MotionEvent event, float x, float y, int id){
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
         trace(event.getX(), event.getY());
-        trace(this.getX() + x, this.getY() + y);
-        return false;
+        trace(this.getX(x), this.getY(y));
+        trace(eventGetX(event, x), eventGetY(event, y));
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d("down", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
+                if(eventGetX(event, x) > 50 || eventGetX(event, x) < 0 || eventGetY(event, y) > 50 || eventGetY(event, y) < 0){
+                    break;
+                }
+                Log.d("down", "success");
+                aIsTouched = true;
+                return new ResTouchEvent(this.getId(), true);
+            case MotionEvent.ACTION_UP:
+                Log.d("up", String.valueOf(event.getX()) + ":" + String.valueOf(event.getY()));
+                if(eventGetX(event, x) > 50 || eventGetX(event, x) < 0 || eventGetY(event, y) > 50 || eventGetY(event, y) < 0){
+                    aIsTouched = false;
+                    break;
+                }
+                if(!aIsTouched){
+                    break;
+                }
+                Log.d("up", "success");
+                aIsTouched = false;
+                aIsSelected = true;
+                this.invalidate();
+                aParent.checkUnit(aNumber);
+
+                return new ResTouchEvent(this.getId(), true);
+        }
+        return new ResTouchEvent();
     }
 
-    public boolean postTouchEvent(MotionEvent event, float x, float y){
+    public ResTouchEvent postTouchEvent(MotionEvent event, float x, float y, int id){
+        if(id != 0 && id != this.getId()){
+            return new ResTouchEvent();
+        }
         trace(event.getX(), event.getY());
         trace(this.getX() + x, this.getY() + y);
-        return false;
+        return new ResTouchEvent();
     }
 }

@@ -12,6 +12,7 @@ public class Global {
         aRateW = 1;
         aRateH = 1;
     }
+
     public static Global getInstance(){
         return instance;
     }
@@ -21,6 +22,7 @@ public class Global {
     public int aDisplayWidth;
     public int aDisplayHeight;
     public double aRateW, aRateH;
+
     public void setDisplaySize(int w, int h){
         this.aDisplayWidth = w;
         this.aDisplayHeight = h;

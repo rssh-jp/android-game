@@ -24,8 +24,11 @@ public class DrawBase {
 //        new Object(){}.getClass().getName();
         return new Object(){}.getClass().getEnclosingClass().getName();
     }
-    private void trace(double x, double y){
+    protected void trace(double x, double y){
         Log.d(getClassName(), String.valueOf(x) + ":" + String.valueOf(y));
+    }
+    protected void trace(String s){
+        Log.d(getClassName(), s);
     }
     public void setPos(double x, double y){
         aPos.aX = x;

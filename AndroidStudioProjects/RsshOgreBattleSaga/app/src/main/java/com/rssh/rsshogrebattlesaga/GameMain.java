@@ -16,39 +16,61 @@ import android.view.View;
 public class GameMain extends View {
     protected double aRateW;
     protected double aRateH;
-    private Cockpit aCockpit;
-    private float aX;
-    private Vector3D aVec;
     private ScaleGestureDetector aScaleGesture;
     private String aEventId;
+
+    public eState aState;
+
+    private enum eState{
+        FieldInit,
+        Field,
+        Map,
+        MapInit,
+        Setting,
+        SettiongInit,
+    }
+
+    private DrawBase aMainDisplay;
+    private DrawBase aCockpitDisplay;
+
     public GameMain(Context context) {
         super(context);
         Global g = Global.getInstance();
         aRateW = g.getWidthRate();
         aRateH = g.getHeightRate();
-        aCockpit = new Cockpit("cockpit");
-        aCockpit.setPos(0, 1000);
-        aVec = new Vector3D(10, 0, 0);
-        aX = 0;
         aEventId = "";
 
-//        aScaleGesture = new ScaleGestureDetector(context, scaleGestureListener);
+        aState = eState.FieldInit;
+
+        aMainDisplay = null;
+        aCockpitDisplay = null;
+
     }
     public void update(){
-        if(aX >= 1000 - 30 || aX < 0){
-            aVec.aX *= -1;
+        switch(aState){
+        case FieldInit:
+            aMainDisplay = new FieldMain("display");
+            aCockpitDisplay = new FieldCockpit("cockpit");
+            aCockpitDisplay.setPos(0, 1000);
+            aState = eState.Field;
+            break;
+        case Field:
+            aMainDisplay.update();
+            aCockpitDisplay.update();
+            break;
         }
-        aX += aVec.aX;
-        aCockpit.update();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if(aMainDisplay != null){
+            aMainDisplay.draw(canvas);
+        }
+        if(aCockpitDisplay != null){
+            aCockpitDisplay.draw(canvas);
+        }
         super.onDraw(canvas);
-        aCockpit.draw(canvas);
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-        canvas.drawRect((float)calcX(aX), (float)calcY(0), (float)calcX(aX + 30), (float)calcY(30), p);
+
     }
     public double calcX(double x){return x * aRateW;}
     public double calcY(double y){return y * aRateH;}
@@ -64,21 +86,40 @@ public class GameMain extends View {
 */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        aScaleGesture.onTouchEvent(event);
-        // 前タッチイベント
-        ResTouchEvent res = aCockpit.preTouchEvent(event, 0, 0, aEventId);
-        if(res.aResult){
-            aEventId = res.aId;
-            return true;
-        }
+        Log.d("aaaaaaaa", "IIIIIIIIII");
 
+        // 前タッチイベント
+        if(aMainDisplay != null){
+            ResTouchEvent res = aMainDisplay.preTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
+        }
+        Log.d("aaaaaaaa", "BBBBBBBBBBBBBB");
+        if(aCockpitDisplay != null){
+            ResTouchEvent res = aCockpitDisplay.preTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
+        }
         // execute
 
         // 後タッチイベント
-        res = aCockpit.postTouchEvent(event, 0, 0, aEventId);
-        if(res.aResult){
-            aEventId = res.aId;
-            return true;
+        if(aMainDisplay != null){
+            ResTouchEvent res = aMainDisplay.postTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
+        }
+        if(aCockpitDisplay != null){
+            ResTouchEvent res = aCockpitDisplay.postTouchEvent(event, 0, 0, aEventId);
+            if(res.aResult){
+                aEventId = res.aId;
+                return true;
+            }
         }
 
         return super.onTouchEvent(event);

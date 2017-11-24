@@ -11,8 +11,8 @@ import android.graphics.Paint;
 public class FieldMain extends DrawBase{
     private float aX;
     private Vector3D aVec;
-    public FieldMain(String id){
-        super(id);
+    public FieldMain(String id, double x, double y){
+        super(id, x, y);
         aVec = new Vector3D(10, 0, 0);
         aX = 0;
     }

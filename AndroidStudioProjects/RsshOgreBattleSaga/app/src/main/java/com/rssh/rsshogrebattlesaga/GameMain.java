@@ -49,9 +49,8 @@ public class GameMain extends View {
     public void update(){
         switch(aState){
         case FieldInit:
-            aMainDisplay = new FieldMain("display");
-            aCockpitDisplay = new FieldCockpit("cockpit");
-            aCockpitDisplay.setPos(0, 1000);
+            aMainDisplay = new FieldMain("display", 0, 0);
+            aCockpitDisplay = new FieldCockpit("cockpit", 0, 1000);
             aState = eState.Field;
             break;
         case Field:
@@ -86,8 +85,6 @@ public class GameMain extends View {
 */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d("aaaaaaaa", "IIIIIIIIII");
-
         // 前タッチイベント
         if(aMainDisplay != null){
             ResTouchEvent res = aMainDisplay.preTouchEvent(event, 0, 0, aEventId);
@@ -96,7 +93,6 @@ public class GameMain extends View {
                 return true;
             }
         }
-        Log.d("aaaaaaaa", "BBBBBBBBBBBBBB");
         if(aCockpitDisplay != null){
             ResTouchEvent res = aCockpitDisplay.preTouchEvent(event, 0, 0, aEventId);
             if(res.aResult){

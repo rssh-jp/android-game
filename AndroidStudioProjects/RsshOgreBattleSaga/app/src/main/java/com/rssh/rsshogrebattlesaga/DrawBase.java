@@ -13,9 +13,9 @@ public class DrawBase {
     protected Vector3D aPos;
     protected double aRateW;
     protected double aRateH;
-    public DrawBase(String id){
+    public DrawBase(String id, double x, double y){
         aId = id;
-        aPos = new Vector3D();
+        aPos = new Vector3D(x, y, 0);
         Global g = Global.getInstance();
         aRateW = g.getWidthRate();
         aRateH = g.getHeightRate();
@@ -33,6 +33,10 @@ public class DrawBase {
     public void setPos(double x, double y){
         aPos.aX = x;
         aPos.aY = y;
+    }
+    public void setPos(Vector3D p){
+        aPos.aX = p.aX;
+        aPos.aY = p.aY;
     }
     public double getX(){return aPos.aX;}
     public double getY(){return aPos.aY;}

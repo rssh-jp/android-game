@@ -54,11 +54,13 @@ public class FieldCockpit extends DrawBase{
      * @return
      */
     public ResTouchEvent preTouchEvent(MotionEvent event, float x, float y, String id){
+        ResTouchEvent res = aButton.preTouchEvent(event, x, y, id);
+        if(res.aResult){
+            return res;
+        }
         if(!checkId(id)){
             return new ResTouchEvent();
         }
-        trace(event.getX(), event.getY());
-        trace(getX() + x, getY() + y);
 
         return new ResTouchEvent();
     }

@@ -22,7 +22,8 @@ public class DrawBase {
     }
     private String getClassName(){
 //        new Object(){}.getClass().getName();
-        return new Object(){}.getClass().getEnclosingClass().getName();
+        //return new Object(){}.getClass().getEnclosingClass().getName();
+        return DrawBase.class.getName().toString();
     }
     protected void trace(double x, double y){
         Log.d(getClassName(), String.valueOf(x) + ":" + String.valueOf(y));

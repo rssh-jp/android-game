@@ -94,6 +94,7 @@ public class GameMain extends View {
             }
         }
         if(aCockpitDisplay != null){
+            Log.d("aaaaaa", "aaaaaaaaaaaaa");
             ResTouchEvent res = aCockpitDisplay.preTouchEvent(event, 0, 0, aEventId);
             if(res.aResult){
                 aEventId = res.aId;
